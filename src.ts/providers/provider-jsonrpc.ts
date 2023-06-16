@@ -15,21 +15,21 @@
 
 // https://playground.open-rpc.org/?schemaUrl=https://raw.githubusercontent.com/ethereum/eth1.0-apis/assembled-spec/openrpc.json&uiSchema%5BappBar%5D%5Bui:splitView%5D=true&uiSchema%5BappBar%5D%5Bui:input%5D=false&uiSchema%5BappBar%5D%5Bui:examplesDropdown%5D=false
 
-import { AbiCoder } from "../abi/index.js";
-import { getAddress, resolveAddress } from "../address/index.js";
-import { TypedDataEncoder } from "../hash/index.js";
-import { accessListify } from "../transaction/index.js";
+import { AbiCoder } from '../abi/index.js';
+import { getAddress, resolveAddress } from '../address/index.js';
+import { TypedDataEncoder } from '../hash/index.js';
+import { accessListify } from '../transaction/index.js';
 import {
-    defineProperties, getBigInt, hexlify, isHexString, toQuantity, toUtf8Bytes,
-    makeError, assert, assertArgument,
-    FetchRequest, resolveProperties
-} from "../utils/index.js";
-
-import { AbstractProvider, UnmanagedSubscriber } from "./abstract-provider.js";
-import { AbstractSigner } from "./abstract-signer.js";
-import { Network } from "./network.js";
-import { FilterIdEventSubscriber, FilterIdPendingSubscriber } from "./subscriber-filterid.js";
-import { PollingEventSubscriber } from "./subscriber-polling.js";
+  assert, assertArgument, defineProperties, FetchRequest, getBigInt, hexlify,
+  isHexString, makeError, resolveProperties, toQuantity, toUtf8Bytes
+} from '../utils/index.js';
+import { AbstractProvider, UnmanagedSubscriber } from './abstract-provider.js';
+import { AbstractSigner } from './abstract-signer.js';
+import { Network } from './network.js';
+import {
+  FilterIdEventSubscriber, FilterIdPendingSubscriber
+} from './subscriber-filterid.js';
+import { PollingEventSubscriber } from './subscriber-polling.js';
 
 import type { TypedDataDomain, TypedDataField } from "../hash/index.js";
 import type { TransactionLike } from "../transaction/index.js";
@@ -1158,7 +1158,7 @@ function spelunkData(value: any): null | { message: string, data: string } {
     if (value == null) { return null; }
 
     // These *are* the droids we're looking for.
-    if (typeof(value.message) === "string" && value.message.match("reverted") && isHexString(value.data)) {
+    if (typeof(value.message) === "string" && value.message.match(/revert/i) && isHexString(value.data)) {
         return { message: value.message, data: value.data };
     }
 
